@@ -1,40 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Recipe Finder Application
 
-## Getting Started
+## Overview
 
-First, run the development server:
+Recipe Finder is a web application that allows users to search for recipes based on ingredients, cuisine types, and preparation time. The application provides a seamless user experience with infinite scrolling, optimized image loading, and server-side rendering for faster initial page loads.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- **Recipe Search**: Search recipes by ingredients, cuisine type, and maximum preparation time
+- **Infinite Scrolling**: Automatically load more recipes as the user scrolls down the page
+- **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices
+- **Server-Side Rendering (SSR)**: Fast initial page loads with pre-rendered content
+- **Image Optimization**: Optimized image loading with placeholders and progressive loading
+- **Caching**: API responses are cached for 1 minute to reduce API calls and improve performance
+- **Enhanced UX**: Loading indicators, scroll-to-top button, and smoothly animated transitions
+
+## Architecture
+
+The application is built using:
+
+- **Next.js**: React framework with SSR capabilities
+- **Tailwind CSS**: Utility-first CSS framework for styling
+- **Spoonacular API**: External API for recipe data
+- **React Hooks**: For state management and component lifecycle
+- **Intersection Observer API**: For implementing infinite scrolling
+- **localStorage**: For client-side caching of API responses
+
+## Project Structure
+
+```
+recipe-finder/
+├── components/          # Reusable UI components
+│   ├── InfiniteScroll.js    # Component for infinite scrolling
+│   ├── Layout.js            # Main layout wrapper
+│   ├── LoadingState.js      # Loading indicator
+│   ├── OptimizedImage.js    # Image optimization component
+│   ├── RecipeCard.js        # Individual recipe card
+│   ├── ScrollToTop.js       # Button to scroll to top
+│   └── SearchForm.js        # Recipe search form
+├── pages/               # Application pages
+│   ├── _app.js             # Next.js App component
+│   ├── index.js            # Home page with search form
+│   └── recipes/
+│       ├── index.js        # Recipe search results page
+│       └── [id].js         # Recipe details page
+├── public/              # Static assets
+│   └── images/
+│       └── placeholder-food.jpg    # Placeholder for recipe images
+├── styles/              # CSS files
+│   └── globals.css          # Global styles
+├── utils/               # Utility functions
+│   ├── api.js               # API interaction functions
+│   └── mockData.js          # Mock data for development
+├── .env.local           # Environment variables (not in git)
+├── next.config.js       # Next.js configuration
+├── tailwind.config.js   # Tailwind CSS configuration
+├── postcss.config.js    # PostCSS configuration
+└── package.json         # Project dependencies
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup & Installation
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Prerequisites
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Node.js 14.x or later
+- npm or yarn package manager
+- Spoonacular API key (get one at [spoonacular.com/food-api](https://spoonacular.com/food-api))
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### Installation Steps
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Clone the repository:
 
-## Learn More
+   ```bash
+   git clone https://github.com/yourusername/recipe-finder.git
+   cd recipe-finder
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Install dependencies:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Create a `.env.local` file in the root directory and add your Spoonacular API key:
 
-## Deploy on Vercel
+   ```
+   SPOONACULAR_API_KEY=your_api_key_here
+   NEXT_PUBLIC_SPOONACULAR_API_KEY=your_api_key_here
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Start the development server:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+
+## Building for Production
+
+To create an optimized production build:
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+Then start the production server:
+
+```bash
+npm start
+# or
+yarn start
+```
+
+## API Usage Notes
+
+- The free tier of Spoonacular API has a limited number of requests per day
+- If you encounter `401 Unauthorized` errors, check your API key or consider using mock data
+- To use mock data, set `USE_MOCK_DATA = true` in `utils/api.js`
+
+## Performance Optimizations
+
+1. **Server-Side Rendering**: Initial content is rendered on the server for faster First Contentful Paint (FCP)
+2. **API Response Caching**: Responses are cached for 1 minute to reduce API calls
+3. **Image Optimization**: Images are lazy-loaded and optimized for different screen sizes
+4. **Code Splitting**: Only necessary JavaScript is loaded for each page
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
